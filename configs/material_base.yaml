@@ -1,0 +1,81 @@
+task: 'material_rec'
+gpus: [0]
+
+train_dataset_module: 'lib.datasets.zju_dataset'
+train_dataset_path: 'lib/datasets/zju_dataset.py'
+test_dataset_module: 'lib.datasets.zju_dataset'
+test_dataset_path: 'lib/datasets/zju_dataset.py'
+
+network_module: 'lib.networks.sdf_mat_network'
+network_path: 'lib/networks/sdf_mat_network.py'
+renderer_module: 'lib.networks.renderer.mat_renderer'
+renderer_path: 'lib/networks/renderer/mat_renderer.py'
+
+trainer_module: 'lib.train.trainers.mat_trainer'
+trainer_path: 'lib/train/trainers/mat_trainer.py'
+
+evaluator_module: 'lib.evaluators.evaluator'
+evaluator_path: 'lib/evaluators/evaluator.py'
+
+visualizer_module: 'lib.visualizers.mat_vis'
+visualizer_path: 'lib/visualizers/mat_vis.py'
+
+smpl_model_path: './data/smplx/smpl/SMPL_NEUTRAL.pkl'
+body_part_path: './data/part_joints.pkl'
+joint2part_path: './data/joint2part.npy'
+
+train:
+    batch_size: 1
+    collator: ''
+    lr: 0.0005
+    weight_decay: 0
+    epoch: 400
+    scheduler:
+        type: 'exponential'
+        gamma: 0.1
+        decay_epochs: 1000
+    num_workers: 16
+
+    warm_up: True
+    warm_up_iters: 20000
+    fix_smpl_iters: 200000
+
+test:
+    sampler: 'FrameSampler'
+    frame_sampler_interval: 6 # 10
+    batch_size: 1
+    collator: ''
+
+ep_iter: 500
+save_ep: 200
+eval_ep: 1000
+
+# rendering options
+i_embed: 0
+xyz_res: 10
+view_res: 4
+raw_noise_std: 0
+
+N_samples: 256
+N_rand: 1024
+
+tpose_viewdir: True
+
+perturb: 1
+white_bkgd: False
+voxel_size: [0.005, 0.005, 0.005]
+
+box_padding: 0.15
+
+# record options
+log_interval: 1
+
+pose_sequence_cfg:
+    train_dataset_module: 'lib.datasets.novel_pose_dataset'
+    train_dataset_path: 'lib/datasets/novel_pose_dataset.py'
+    test_dataset_module: 'lib.datasets.novel_pose_dataset'
+    test_dataset_path: 'lib/datasets/novel_pose_dataset.py'
+
+    test:
+        sampler: 'FrameSampler'
+        frame_sampler_interval: 1

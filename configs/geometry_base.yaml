@@ -1,0 +1,114 @@
+task: 'geometry_rec'
+gpus: [0]
+
+train_dataset_module: 'lib.datasets.zju_dataset'
+train_dataset_path: 'lib/datasets/zju_dataset.py'
+test_dataset_module: 'lib.datasets.zju_dataset'
+test_dataset_path: 'lib/datasets/zju_dataset.py'
+
+network_module: 'lib.networks.sdf_color_network'
+network_path: 'lib/networks/sdf_color_network.py'
+renderer_module: 'lib.networks.renderer.color_renderer'
+renderer_path: 'lib/networks/renderer/color_renderer.py'
+
+trainer_module: 'lib.train.trainers.color_trainer'
+trainer_path: 'lib/train/trainers/color_trainer.py'
+
+evaluator_module: 'lib.evaluators.evaluator'
+evaluator_path: 'lib/evaluators/evaluator.py'
+
+visualizer_module: 'lib.visualizers.color_vis'
+visualizer_path: 'lib/visualizers/color_vis.py'
+
+smpl_model_path: './data/smplx/smpl/SMPL_NEUTRAL.pkl'
+novel_poses_path: './data/novel_poses_2000.npy'
+body_part_path: './data/part_joints.pkl'
+joint2part_path: './data/joint2part.npy'
+light_pos_path: './data/light_pos_lvis.npy'
+part_num: 15
+
+train:
+    batch_size: 1
+    collator: ''
+    lr: 0.0005
+    weight_decay: 0
+    epoch: 400
+    scheduler:
+        type: 'exponential'
+        gamma: 0.1
+        decay_epochs: 1000
+    num_workers: 16
+
+    warm_up: True
+    warm_up_iters: 20000
+    fix_smpl_iters: 200000
+
+test:
+    sampler: 'FrameSampler'
+    frame_sampler_interval: 6 # 10
+    batch_size: 1
+    collator: ''
+
+ep_iter: 500
+save_ep: 200
+eval_ep: 1000
+
+# rendering options
+i_embed: 0
+xyz_res: 10
+view_res: 4
+raw_noise_std: 0
+
+N_samples: 256
+N_rand: 1024
+
+tpose_viewdir: True
+
+perturb: 1
+white_bkgd: False
+voxel_size: [0.005, 0.005, 0.005]
+
+box_padding: 0.15
+
+# record options
+log_interval: 1
+
+mesh_cfg:
+    train_dataset_module: 'lib.datasets.zju_mesh_dataset'
+    train_dataset_path: 'lib/datasets/zju_mesh_dataset.py'
+    test_dataset_module: 'lib.datasets.zju_mesh_dataset'
+    test_dataset_path: 'lib/datasets/zju_mesh_dataset.py'
+
+    renderer_module: 'lib.networks.renderer.sdf_mesh_renderer'
+    renderer_path: 'lib/networks/renderer/sdf_mesh_renderer.py'
+
+    evaluator_module: 'lib.evaluators.mesh_evaluator'
+    evaluator_path: 'lib/evaluators/mesh_evaluator.py'
+
+    visualizer_module: 'lib.visualizers.mesh_visualizer'
+    visualizer_path: 'lib/visualizers/mesh_visualizer.py'
+
+    test:
+        sampler: 'FrameSampler'
+        frame_sampler_interval: 30
+
+
+gen_lvis_cfg:
+    train_dataset_module: 'lib.datasets.lvis_dataset'
+    train_dataset_path: 'lib/datasets/lvis_dataset.py'
+    test_dataset_module: 'lib.datasets.lvis_dataset'
+    test_dataset_path: 'lib/datasets/lvis_dataset.py'
+
+    renderer_module: 'lib.networks.renderer.lvis_mesh_renderer'
+    renderer_path: 'lib/networks/renderer/lvis_mesh_renderer.py'
+
+    evaluator_module: 'lib.evaluators.mesh_evaluator'
+    evaluator_path: 'lib/evaluators/mesh_evaluator.py'
+
+    visualizer_module: 'lib.visualizers.lvis_mesh_visualizer'
+    visualizer_path: 'lib/visualizers/lvis_mesh_visualizer.py'
+
+    test:
+        sampler: 'FrameSampler'
+        frame_sampler_interval: 1
+
