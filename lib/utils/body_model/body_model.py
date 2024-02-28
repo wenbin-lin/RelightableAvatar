@@ -16,12 +16,15 @@ def read_pickle(pkl_path):
 
 class BodyModel(nn.Module):
 
-    def __init__(self):
+    def __init__(self, model_path=None):
         super(BodyModel, self).__init__()
-        self.load_smpl_model()
+        self.load_smpl_model(model_path)
 
-    def load_smpl_model(self):
-        smpl = read_pickle(cfg.smpl_model_path)
+    def load_smpl_model(self, model_path=None):
+        if model_path is None:
+            smpl = read_pickle(cfg.smpl_model_path)
+        else:
+            smpl = read_pickle(model_path)
 
         J_regressor = torch.from_numpy(smpl['J_regressor'].toarray().astype(np.float32))
         kintree_table = torch.from_numpy(np.array(smpl['kintree_table']).astype(np.int64))

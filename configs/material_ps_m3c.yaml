@@ -20,6 +20,7 @@ test_dataset:
     ann_file: 'data/people_snapshot/male-3-casual/params.npy'
     split: 'test'
 
+smpl_model_path: './data/smplx/smpl/basicmodel_m_lbs_10_207_0_v1.1.0.pkl'
 
 geometry_model_path: 'data/trained_model/geometry_rec/geometry_ps_m3c'
 lvis_model_path: 'data/trained_model/geometry_rec/lvis_ps_m3c'

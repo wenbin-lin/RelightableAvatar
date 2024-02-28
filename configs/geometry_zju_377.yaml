@@ -39,10 +39,16 @@ use_bigpose: True
 big_box: True
 
 mesh_cfg:
+    begin_ith_frame: 0
+    end_ith_frame: 300
+    frame_interval: 1
 
-    # renderer_module: 'lib.networks.renderer.sdf_mesh_renderer_dataset'
-    # renderer_path: 'lib/networks/renderer/sdf_mesh_renderer_dataset.py'
+    non_rigid_deform: False
+
+    # out_type: 'deformed' 
+    out_type: 'posed'
+    # out_type: 'world'
 
     test:
         sampler: 'FrameSampler'
-        frame_sampler_interval: 30 # 1 # 
+        frame_sampler_interval: 30

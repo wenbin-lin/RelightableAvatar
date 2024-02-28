@@ -68,8 +68,8 @@ class Dataset(data.Dataset):
         self.R_system = np.array([[0, 1, 0], 
                                   [1, 0, 0], 
                                   [0, 0, -1]])
-        
-        for i in range(self.num_cams):        
+
+        for i in range(len(self.cams['R'])):  
             Rs = self.cams['R'][i]
             Rs = Rs @ self.R_system
             self.cams['R'][i] = Rs
@@ -186,6 +186,14 @@ class Dataset(data.Dataset):
             params = np.load(params_path, allow_pickle=True).item()
             Rh = params['Rh'].astype(np.float32).reshape(-1, )
             Th = params['Th'].astype(np.float32).reshape(-1, )
+
+            rot_new = Rotation.from_matrix(self.R_system) * Rotation.from_rotvec(Rh)
+            rot_new_vec = rot_new.as_rotvec()
+            Rh_new = rot_new_vec
+            Rh = Rh_new
+            Th_new = np.array([Th[1], Th[0], -Th[2]])
+            Th = Th_new
+
             poses = params['poses'].reshape(-1, )
             beta = params['shapes']
 

@@ -20,7 +20,7 @@ evaluator_path: 'lib/evaluators/evaluator.py'
 visualizer_module: 'lib.visualizers.color_vis'
 visualizer_path: 'lib/visualizers/color_vis.py'
 
-smpl_model_path: './data/smplx/smpl/SMPL_NEUTRAL.pkl'
+smpl_model_path: './data/smplx/smpl/basicmodel_neutral_lbs_10_207_0_v1.1.0.pkl'
 novel_poses_path: './data/novel_poses_2000.npy'
 body_part_path: './data/part_joints.pkl'
 joint2part_path: './data/joint2part.npy'
@@ -48,6 +48,8 @@ test:
     frame_sampler_interval: 6 # 10
     batch_size: 1
     collator: ''
+
+num_train_frame: 300
 
 ep_iter: 500
 save_ep: 200

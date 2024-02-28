@@ -20,6 +20,8 @@ test_dataset:
     ann_file: 'data/people_snapshot/male-3-casual/params.npy'
     split: 'test'
 
+smpl_model_path: './data/smplx/smpl/basicmodel_m_lbs_10_207_0_v1.1.0.pkl'
+
 test:
     frame_sampler_interval: 30
 
