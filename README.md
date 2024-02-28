@@ -1,6 +1,6 @@
 # RelightableAvatar (AAAI'2024)
 
-### [Project Page](https://wenbin-lin.github.io/RelightableAvatar-page/) | [Paper](https://arxiv.org/abs/2312.12877) | [Video](hhttps://www.youtube.com/watch?v=asxefE2Ey6E)
+### [Project Page](https://wenbin-lin.github.io/RelightableAvatar-page/) | [Paper](https://arxiv.org/abs/2312.12877) | [Video](https://www.youtube.com/watch?v=asxefE2Ey6E) 
 
 ## Installation
 
