@@ -39,7 +39,7 @@ Results are saved in `$ROOT/data/`. Target environment light and pose sequence c
 - For the People-Snapshot dataset
     1. Download the People-Snapshot dataset [here](https://graphics.tu-bs.de/people-snapshot).
     2. Create a soft link by: `ln -s /path/to/people_snapshot ./data/people_snapshot`
-    3. Run this script to process the dataset: `python ./tools/process_snapshot.py`
+    3. Run this script to process the dataset: `python process_snapshot.py`
 
 - For the ZJU-Mocap dataset, we follow [AnimatableNeRF](https://github.com/zju3dv/animatable_nerf/blob/master/INSTALL.md) for dataset preparation. Then create a soft link by: `ln -s /path/to/zju_mocap ./data/zju_mocap`
 
