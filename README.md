@@ -46,6 +46,7 @@ Results are saved in `$ROOT/data/`. Target environment light and pose sequence c
 ### Train the model in 3 stages
 
 **1. Geometry and Motion Reconstruction**
+
 Training.
 ```
 python train_geometry.py --cfg_file configs/geometry_ps_m3c.yaml exp_name geometry_ps_m3c
@@ -56,6 +57,7 @@ python run_geometry.py --type visualize --cfg_file configs/geometry_ps_m3c.yaml 
 ```
 
 **2. Light Visibility Estimation**
+
 Generate training data.
 ```
 python run_geometry.py --type visualize --cfg_file configs/geometry_ps_m3c.yaml exp_name geometry_ps_m3c gen_lvis_mesh True
@@ -66,6 +68,7 @@ python train_lvis.py --cfg_file configs/geometry_ps_m3c.yaml exp_name lvis_ps_m3
 ```
 
 **3. Material and Lighting**
+
 Training.
 ```
 python train_material.py --cfg_file configs/material_ps_m3c.yaml exp_name material_ps_m3c
