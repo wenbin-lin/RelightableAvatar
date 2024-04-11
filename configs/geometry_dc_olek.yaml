@@ -1,0 +1,59 @@
+task: 'geometry_rec'
+gpus: [0]
+
+parent_cfg: 'configs/geometry_base.yaml'
+
+train_dataset_module: 'lib.datasets.dc_dataset'
+train_dataset_path: 'lib/datasets/dc_dataset.py'
+test_dataset_module: 'lib.datasets.dc_dataset'
+test_dataset_path: 'lib/datasets/dc_dataset.py'
+
+train_dataset:
+    data_root: 'data/deepcap/olek_images0812'
+    human: 'Olek'
+    ann_file: 'data/deepcap/olek_images0812/annots.npy'
+    split: 'train'
+
+test_dataset:
+    data_root: 'data/deepcap/olek_images0812'
+    human: 'Olek'
+    ann_file: 'data/deepcap/olek_images0812/annots.npy'
+    split: 'test'
+
+test:
+    frame_sampler_interval: 30
+
+train:
+    warm_up: True
+    warm_up_iters: 20000
+    fix_smpl_iters: 200000
+    epoch: 400 
+
+N_samples: 256
+ratio: 1.
+training_view: [10, 14, 20, 28]
+test_view: [3] 
+num_train_frame: 300
+num_eval_frame: 300
+begin_ith_frame: 0
+frame_interval: 1
+smpl: 'smpl'
+vertices: 'vertices'
+params: 'params'
+use_bigpose: True
+big_box: True
+
+mesh_cfg:
+    begin_ith_frame: 0
+    end_ith_frame: 300
+    frame_interval: 1
+
+    non_rigid_deform: False
+
+    # out_type: 'deformed' 
+    out_type: 'posed'
+    # out_type: 'world'
+
+    test:
+        sampler: 'FrameSampler'
+        frame_sampler_interval: 30

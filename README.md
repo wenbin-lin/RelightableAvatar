@@ -36,12 +36,19 @@ Results are saved in `$ROOT/data/`. Target environment light and pose sequence c
 
 ### Dataset preparation
 
-- For the People-Snapshot dataset
+- People-Snapshot dataset
     1. Download the People-Snapshot dataset [here](https://graphics.tu-bs.de/people-snapshot).
     2. Create a soft link by: `ln -s /path/to/people_snapshot ./data/people_snapshot`
     3. Run this script to process the dataset: `python process_snapshot.py`
 
-- For the ZJU-Mocap dataset, we follow [AnimatableNeRF](https://github.com/zju3dv/animatable_nerf/blob/master/INSTALL.md) for dataset preparation. Then create a soft link by: `ln -s /path/to/zju_mocap ./data/zju_mocap`
+- For ZJU-Mocap, Human3.6M and MonoCap dataset, we follow [AnimatableNeRF](https://github.com/zju3dv/animatable_nerf/blob/master/INSTALL.md) for dataset preparation. Then create soft links by: 
+  `ln -s /path/to/zju_mocap ./data/zju_mocap`
+  `ln -s /path/to/deepcap ./data/deepcap`
+  `ln -s /path/to/h36m ./data/h36m`
+
+- Our synthetic dataset
+  1. Download the dataset from [Google Drive](https://drive.google.com/drive/folders/1IhJPNlY4RMTFrm0jHRU5BLK4px957chP?usp=sharing), this dataset is processed following  [NeuralBody](https://github.com/zju3dv/neuralbody/tree/master/tools/custom).
+  2. Create a soft link by: `ln -s /path/to/mixamo ./data/mixamo`
 
 ### Train the model in 3 stages
 
@@ -80,8 +87,8 @@ python run_material.py --type visualize --cfg_file configs/material_ps_m3c.yaml 
 
 ## TODO
 
-- More datasets (Human3.6M, DeepCap and our synthetic dataset) and pretrained models.
-- Release the synthetic dataset.
+- ~~More datasets (Human3.6M, DeepCap and our synthetic dataset) and pretrained models.~~
+- ~~Release the synthetic dataset.~~
 
 ## Citation
 

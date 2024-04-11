@@ -1,0 +1,58 @@
+task: 'material_rec'
+gpus: [0]
+
+parent_cfg: 'configs/material_base.yaml'
+
+train_dataset_module: 'lib.datasets.dc_dataset'
+train_dataset_path: 'lib/datasets/dc_dataset.py'
+test_dataset_module: 'lib.datasets.dc_dataset'
+test_dataset_path: 'lib/datasets/dc_dataset.py'
+
+train_dataset:
+    data_root: 'data/deepcap/olek_images0812'
+    human: 'Olek'
+    ann_file: 'data/deepcap/olek_images0812/annots.npy'
+    split: 'train'
+
+test_dataset:
+    data_root: 'data/deepcap/olek_images0812'
+    human: 'Olek'
+    ann_file: 'data/deepcap/olek_images0812/annots.npy'
+    split: 'test'
+
+geometry_model_path: 'data/trained_model/geometry_rec/geometry_dc_olek'
+lvis_model_path: 'data/trained_model/geometry_rec/lvis_dc_olek'
+
+novel_light_path: 'data/envmaps/studio'
+novel_poses_path: 'data/pose_seq/gBR_sBM_cAll_d04_mBR0_ch01.npz'
+novel_light: False
+
+img_w: 1024
+img_h: 1024
+
+test:
+    frame_sampler_interval: 30
+
+train:
+    epoch: 200 
+    use_vis: True
+    use_part_wise: True
+
+N_samples: 256
+ratio: 1.0
+training_view: [10, 14, 20, 28]
+test_view: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 49]
+num_train_frame: 300
+num_eval_frame: 300
+begin_ith_frame: 0
+frame_interval: 1
+smpl: 'smpl'
+vertices: 'vertices'
+params: 'params'
+use_bigpose: True
+big_box: True
+
+mesh_cfg:
+    test:
+        sampler: 'FrameSampler'
+        frame_sampler_interval: 30 # 1 # 

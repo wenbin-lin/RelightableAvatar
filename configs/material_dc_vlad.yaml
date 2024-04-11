@@ -1,0 +1,58 @@
+task: 'material_rec'
+gpus: [0]
+
+parent_cfg: 'configs/material_base.yaml'
+
+train_dataset_module: 'lib.datasets.dc_dataset'
+train_dataset_path: 'lib/datasets/dc_dataset.py'
+test_dataset_module: 'lib.datasets.dc_dataset'
+test_dataset_path: 'lib/datasets/dc_dataset.py'
+
+train_dataset:
+    data_root: 'data/deepcap/vlad_images1011'
+    human: 'Vlad'
+    ann_file: 'data/deepcap/vlad_images1011/annots.npy'
+    split: 'train'
+
+test_dataset:
+    data_root: 'data/deepcap/vlad_images1011'
+    human: 'Vlad'
+    ann_file: 'data/deepcap/vlad_images1011/annots.npy'
+    split: 'test'
+
+geometry_model_path: 'data/trained_model/geometry_rec/geometry_dc_vlad'
+lvis_model_path: 'data/trained_model/geometry_rec/lvis_dc_vlad'
+
+novel_light_path: 'data/envmaps/studio'
+novel_poses_path: 'data/pose_seq/gBR_sBM_cAll_d04_mBR0_ch01.npz'
+novel_light: False
+
+img_w: 1024
+img_h: 1024
+
+test:
+    frame_sampler_interval: 30
+
+train:
+    epoch: 200 
+    use_vis: True
+    use_part_wise: True
+
+N_samples: 256
+ratio: 1.0
+training_view: [4, 30, 41, 66]
+test_view: [0, 14, 20, 30, 39, 50, 61, 71, 80, 87, 100]
+num_train_frame: 300
+num_eval_frame: 300
+begin_ith_frame: 0
+frame_interval: 1
+smpl: 'smpl'
+vertices: 'vertices'
+params: 'params'
+use_bigpose: True
+big_box: True
+
+mesh_cfg:
+    test:
+        sampler: 'FrameSampler'
+        frame_sampler_interval: 30 # 1 # 

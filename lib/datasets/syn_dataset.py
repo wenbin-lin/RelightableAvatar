@@ -63,17 +63,6 @@ class Dataset(data.Dataset):
         weights = np.load(os.path.join(self.lbs_root, 'weights.npy'))
         self.weights = weights.astype(np.float32)
         self.big_A = self.load_bigpose()
-
-        # add rotation to the system (cameras and smpl params) to make the z-axis go up
-        self.R_system = np.array([[0, 1, 0], 
-                                  [1, 0, 0], 
-                                  [0, 0, -1]])
-
-        for i in range(len(self.cams['R'])):     
-            Rs = self.cams['R'][i]
-            Rs = Rs @ self.R_system
-            self.cams['R'][i] = Rs
-
         self.nrays = cfg.N_rand
 
     def load_bigpose(self):
@@ -141,15 +130,6 @@ class Dataset(data.Dataset):
         R = cv2.Rodrigues(Rh)[0].astype(np.float32)
         pxyz = np.dot(wxyz - Th, R).astype(np.float32)
 
-        # recompute wxyz to make the z-axis go up
-        rot_new = Rotation.from_matrix(self.R_system) * Rotation.from_rotvec(Rh)
-        rot_new_vec = rot_new.as_rotvec()
-        Rh_new = np.array([[rot_new_vec[0, 0], rot_new_vec[0, 1], rot_new_vec[0, 2]]])
-        Rh = Rh_new
-
-        Th_new = (self.R_system @ Th.T).T
-        Th = Th_new.astype(np.float32)
-
         R = cv2.Rodrigues(Rh)[0].astype(np.float32)
         wxyz = (np.dot(pxyz, R.T) + Th).astype(np.float32)
 
@@ -186,13 +166,6 @@ class Dataset(data.Dataset):
             params = np.load(params_path, allow_pickle=True).item()
             Rh = params['Rh'].astype(np.float32).reshape(-1, )
             Th = params['Th'].astype(np.float32).reshape(-1, )
-
-            rot_new = Rotation.from_matrix(self.R_system) * Rotation.from_rotvec(Rh)
-            rot_new_vec = rot_new.as_rotvec()
-            Rh_new = rot_new_vec
-            Rh = Rh_new
-            Th_new = (self.R_system @ Th.T).T
-            Th = Th_new.astype(np.float32)
 
             poses = params['poses'].reshape(-1, )
             beta = params['shapes']

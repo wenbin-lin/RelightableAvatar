@@ -65,9 +65,9 @@ class Dataset(data.Dataset):
         self.big_A = self.load_bigpose()
 
         # add rotation to the system (cameras and smpl params) to make the z-axis go up
-        self.R_system = np.array([[0, 1, 0], 
-                                  [1, 0, 0], 
-                                  [0, 0, -1]])
+        self.R_system = np.array([[-1, 0, 0], 
+                                  [0, 0, 1], 
+                                  [0, 1, 0]])
 
         for i in range(len(self.cams['R'])):     
             Rs = self.cams['R'][i]
