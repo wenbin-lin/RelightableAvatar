@@ -701,8 +701,9 @@ def render_with_sg(points, normal, viewdirs, posed_pts, j_transform, poses, rot_
     pts_basis = pts.expand([n_basis] + dots_shape + [3])
     pts_basis = pts_basis.reshape((-1, 3))
 
-    origin_lgtSGMus_basis = origin_lgtSGMus[:, 0].unsqueeze(0).expand([n_basis] + dots_shape + [3])
-    origin_lgtSGMus_basis = origin_lgtSGMus_basis.reshape([-1, 3])
+    origin_lgtSGMus_basis = origin_lgtSGMus.unsqueeze(0).expand([n_basis] + dots_shape + [M, 3]).reshape((-1, M, 3))
+    lgtSGLobes_basis = lgtSGLobes.unsqueeze(0).expand([n_basis] + dots_shape + [M, 3]).reshape((-1, M, 3))
+    lgtSGLambdas_basis = lgtSGLambdas.unsqueeze(0).expand([n_basis] + dots_shape + [M, 1]).reshape((-1, M, 1))
 
     # NDF
     brdfSGLobes = normal_basis  # use normal as the brdf SG lobes
@@ -765,13 +766,11 @@ def render_with_sg(points, normal, viewdirs, posed_pts, j_transform, poses, rot_
     light_vis_basis = light_vis.unsqueeze(0).expand([n_basis] + dots_shape + [M, 3])
     light_vis_basis = light_vis_basis.reshape([-1, M, 3])
 
-    lgtSGMus = origin_lgtSGMus_basis[:, None, :] * brdf_vis * light_vis_basis
+    lgtSGMus = origin_lgtSGMus_basis * brdf_vis * light_vis_basis
 
     vis_shadow = torch.mean(light_vis * origin_lgtSGMus, axis=1).squeeze()
 
     # multiply with light sg
-    lgtSGLobes_basis = lgtSGLobes.unsqueeze(0).expand([n_basis] + dots_shape + [M, 3]).reshape((-1, M, 3))
-    lgtSGLambdas_basis = lgtSGLambdas.unsqueeze(0).expand([n_basis] + dots_shape + [M, 1]).reshape((-1, M, 1))
     warpBrdfSGLobes = warpBrdfSGLobes.unsqueeze(1).expand(dots_shape_basis + [M, 3])
     warpBrdfSGLambdas = warpBrdfSGLambdas.unsqueeze(1).expand(dots_shape_basis + [M, 1])
     warpBrdfSGMus = warpBrdfSGMus.unsqueeze(1).expand(dots_shape_basis + [M, 3])
